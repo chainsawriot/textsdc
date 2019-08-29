@@ -1,0 +1,17 @@
+Package: textsdc
+Title: Statistical Data Cleaning For Text Data
+Version: 0.0.0.1
+Authors@R: 
+    person(given = "Chung-hong",
+           family = "Chan",
+           role = c("aut", "cre"),
+           email = "chainsawtiney@gmail.com",
+	   comment = c(ORCID = "0000-0002-6232-7530"))
+Description: Clean your text data.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.1
+Imports: 
+    quanteda
