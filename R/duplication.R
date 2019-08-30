@@ -4,6 +4,19 @@
     }
 }
 
+.check_ids <- function(x) {
+    if (is.null(x)) {
+        return(0)
+    }
+    if (length(x) == 1) {
+        if (is.na(x)) {
+            return(0)
+        }
+    }
+    return(length(x))
+}
+
+
 #' Calculate duplication from a text vector
 #'
 #' This function uses the simple bag-of-words assumption to calculate possible duplicates in the input text vector. It works better with longer text than shorter text.
@@ -37,7 +50,9 @@ calculate_duplication <- function(input_text, return_text_only = FALSE, method =
             if (length(clusters) > 1) {
                 removing_ids <- setdiff(clusters, i)
                 excluded <- c(excluded, removing_ids)
-                matching_ids[[i]] <- removing_ids
+                matching_ids[[i]] <- as.numeric(clusters)
+            } else {
+                matching_ids[[i]] <- NA
             }
         }
     }
@@ -65,8 +80,39 @@ print.duplication <- function(duplication) {
 #' This method extracts the deduplicated text vector of the input duplication object.
 #'
 #' @param duplication the duplication object to be processed
+#' @param precedence character of one of the following options: earlier (default), longer, shorter, random. This option controls which document to take when duplicates exist.
+#' \itemize{
+#'    \item earlier: Take the document which is earlier in the input text vector.
+#'    \item longer: Take the document which is longer.
+#'    \item shorter: Take the document which is shorter.
+#'    \item random: Randomly take a document.
+#' }
 #' @return a text vector
 #' @export
-get_deduplicated_version <- function(duplication) {
-    duplication$clean_text
+get_deduplicated_version <- function(duplication, precedence = "earlier") {
+    if (!precedence %in% c("earlier", "longer", "shorter", "random")) {
+        stop("Please use a valid precedence option: earlier, longer, shorter, random")
+    }
+    if (precedence == "earlier") {
+        return(duplication$clean_text)
+    }
+    bag <- which(is.na(duplication$matching_ids))
+    excluded <- c()
+    input_text_length <- nchar(duplication$input_text)
+    ids_with_dups <- which(sapply(duplication$matching_ids, .check_ids) != 0)
+    for (i in ids_with_dups) {
+        cluster <- duplication$matching_ids[[i]]
+        if (precedence == "longer") {
+            target <- cluster[which.max(input_text_length[cluster])]
+        } else if (precedence == "shorter") {
+            target <- cluster[which.min(input_text_length[cluster])]
+        } else if (precedence == "random") {
+            target <- sample(cluster, 1)
+        }
+    
+    removing_ids <- setdiff(cluster, target)
+    excluded <- c(excluded, removing_ids)    
+    bag <- sort(c(bag, target))
+    }
+    duplication$input_text[bag]
 }

@@ -28,6 +28,8 @@ devtools::install_github("chainsawriot/textsdc")
 Example
 -------
 
+### Deduplication
+
 Calculate the possible duplicates in your input text.
 
 ``` r
@@ -123,4 +125,47 @@ get_deduplicated_version(dups4)
 #> [3] "撤銷對至今為止所有反送中抗爭者控罪"    
 #> [4] "徹底追究警隊濫權情況"                  
 #> [5] "以行政命令解散立法會，立即實行雙真普選"
+```
+
+There are four precedence options on how to get the deduplicated version of the input text.
+
+Default: earlier
+
+``` r
+metallica <- c("Unforgiven",
+               "Unforgiven II",
+               "Unforgiven III",
+               "Fight Fire With Fire",
+               "Master of Puppets",
+               "For Whom The Bell Tolls",
+               "For Whom The Bell Toll",
+               "Master of Puppets")
+metallica_dups <- calculate_duplication(metallica, threshold = 0.7)
+get_deduplicated_version(metallica_dups)
+#> [1] "Unforgiven"              "Fight Fire With Fire"   
+#> [3] "Master of Puppets"       "For Whom The Bell Tolls"
+```
+
+Longer
+
+``` r
+get_deduplicated_version(metallica_dups, precedence = "longer")
+#> [1] "Unforgiven III"          "Fight Fire With Fire"   
+#> [3] "Master of Puppets"       "For Whom The Bell Tolls"
+```
+
+Shorter
+
+``` r
+get_deduplicated_version(metallica_dups, precedence = "shorter")
+#> [1] "Unforgiven"             "Fight Fire With Fire"  
+#> [3] "Master of Puppets"      "For Whom The Bell Toll"
+```
+
+Random
+
+``` r
+get_deduplicated_version(metallica_dups, precedence = "random")
+#> [1] "Unforgiven"              "Fight Fire With Fire"   
+#> [3] "Master of Puppets"       "For Whom The Bell Tolls"
 ```

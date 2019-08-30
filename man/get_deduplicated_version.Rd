@@ -4,10 +4,18 @@
 \alias{get_deduplicated_version}
 \title{Extract deduplicated version from duplication objects}
 \usage{
-get_deduplicated_version(duplication)
+get_deduplicated_version(duplication, precedence = "earlier")
 }
 \arguments{
 \item{duplication}{the duplication object to be processed}
+
+\item{precedence}{character of one of the following options: earlier (default), longer, shorter, random. This option controls which document to take when duplicates exist.
+\itemize{
+\item earlier: Take the document which is earlier in the input text vector.
+\item longer: Take the document which is longer.
+\item shorter: Take the document which is shorter.
+\item random: Randomly take a document.
+}}
 }
 \value{
 a text vector
