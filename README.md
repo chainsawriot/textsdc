@@ -132,9 +132,9 @@ There are four precedence options on how to get the deduplicated version of the 
 Default: earlier
 
 ``` r
-metallica <- c("Unforgiven",
-               "Unforgiven II",
-               "Unforgiven III",
+metallica <- c("The Unforgiven",
+               "The Unforgiven II",
+               "The Unforgiven III",
                "Fight Fire With Fire",
                "Master of Puppets",
                "For Whom The Bell Tolls",
@@ -142,7 +142,7 @@ metallica <- c("Unforgiven",
                "Master of Puppets")
 metallica_dups <- calculate_duplication(metallica, threshold = 0.7)
 get_deduplicated_version(metallica_dups)
-#> [1] "Unforgiven"              "Fight Fire With Fire"   
+#> [1] "The Unforgiven"          "Fight Fire With Fire"   
 #> [3] "Master of Puppets"       "For Whom The Bell Tolls"
 ```
 
@@ -150,7 +150,7 @@ Longer
 
 ``` r
 get_deduplicated_version(metallica_dups, precedence = "longer")
-#> [1] "Unforgiven III"          "Fight Fire With Fire"   
+#> [1] "The Unforgiven III"      "Fight Fire With Fire"   
 #> [3] "Master of Puppets"       "For Whom The Bell Tolls"
 ```
 
@@ -158,7 +158,7 @@ Shorter
 
 ``` r
 get_deduplicated_version(metallica_dups, precedence = "shorter")
-#> [1] "Unforgiven"             "Fight Fire With Fire"  
+#> [1] "The Unforgiven"         "Fight Fire With Fire"  
 #> [3] "Master of Puppets"      "For Whom The Bell Toll"
 ```
 
@@ -166,6 +166,6 @@ Random
 
 ``` r
 get_deduplicated_version(metallica_dups, precedence = "random")
-#> [1] "Unforgiven"              "Fight Fire With Fire"   
-#> [3] "Master of Puppets"       "For Whom The Bell Tolls"
+#> [1] "The Unforgiven III"      "Fight Fire With Fire"   
+#> [3] "For Whom The Bell Tolls" "Master of Puppets"
 ```

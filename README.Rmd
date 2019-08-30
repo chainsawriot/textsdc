@@ -104,9 +104,9 @@ There are four precedence options on how to get the deduplicated version of the 
 Default: earlier
 
 ```{r earlier}
-metallica <- c("Unforgiven",
-               "Unforgiven II",
-               "Unforgiven III",
+metallica <- c("The Unforgiven",
+               "The Unforgiven II",
+               "The Unforgiven III",
                "Fight Fire With Fire",
                "Master of Puppets",
                "For Whom The Bell Tolls",
