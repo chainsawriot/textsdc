@@ -72,14 +72,19 @@ dups
 dups$dist_matrix
 ```
 
+Extract the deduplicated version
+
+```{r example21}
+get_deduplicated_version(dups)
+```
+
+
 Adjust the threshold for duplication.
 
 ```{r example3}
 dups2 <- calculate_duplication(lyrics, threshold = 0.9)
 dups2
 ```
-
-Extract the deduplicated version
 
 ```{r example4}
 get_deduplicated_version(dups2)

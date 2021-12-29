@@ -117,6 +117,22 @@ dups$dist_matrix
 #> text17 1.0000000 0.1010153 1.0000000
 ```
 
+Extract the deduplicated version
+
+``` r
+get_deduplicated_version(dups)
+#>  [1] "He drinks a Whiskey drink"                           
+#>  [2] "he drinks a Vodka drink"                             
+#>  [3] "He drinks a Lager drink"                             
+#>  [4] "he drinks a Cider drink"                             
+#>  [5] "He sings the songs that remind him of the good times"
+#>  [6] "He sings the songs that remind him of the best times"
+#>  [7] "Oh Danny Boy"                                        
+#>  [8] "Danny Boy"                                           
+#>  [9] "I get knocked down, but I get up again"              
+#> [10] "You are never gonna keep me down"
+```
+
 Adjust the threshold for duplication.
 
 ``` r
@@ -124,8 +140,6 @@ dups2 <- calculate_duplication(lyrics, threshold = 0.9)
 dups2
 #> Text vector of length 17 with 8 duplicates.
 ```
-
-Extract the deduplicated version
 
 ``` r
 get_deduplicated_version(dups2)
@@ -221,6 +235,6 @@ Random
 
 ``` r
 get_deduplicated_version(metallica_dups, precedence = "random")
-#> [1] "The Unforgiven III"      "Fight Fire With Fire"   
-#> [3] "Master of Puppets"       "For Whom The Bell Tolls"
+#> [1] "The Unforgiven"         "Fight Fire With Fire"   "For Whom The Bell Toll"
+#> [4] "Master of Puppets"
 ```
