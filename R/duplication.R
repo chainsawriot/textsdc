@@ -21,17 +21,21 @@
 #'
 #' This function uses the simple bag-of-words assumption to calculate possible duplicates in the input text vector. It works better with longer text than shorter text.
 #'
-#' @param input_text text vector to be analysed
+#' @param input_text It can either be a text vector or a [quanteda::dfm()] object.
 #' @param return_text_only logical, if TRUE, return only the cleaned version of text. If FALSE, return a duplication object.
 #' @param method character, which method to calculate similarity between documents. Default is "cosine" (cosine similarity), other options are: "correlation", "jaccard", "ejaccard", "dice", "edice", "hammm", "simple matching", please refer to [quanteda.textstats::textstat_simil()]
 #' @param threshold numeric, the numeric threshold of text similarity between two documents to be assumed to be duplicates. If percentile is TRUE, this threshold is a percentile rank.
 #' @param percentile logical, if TRUE, threshold is a percentile rank. (i.e. two documents are assumed to be duplicates, when the text similarity between them is higher than this percentile.)
-#' @param low_memory logical, if TRUE, the similarity matrix is not convert to matrix. The trade-off: the deduplication process is going to be slower.
+#' @param low_memory logical, if TRUE, the similarity matrix is not convert to a regular matrix. The trade-off: the deduplication process is going to be slower.
 #' @param verbose logical, if TRUE, display debug messages.
 #' @return a duplication object if return_text_only is FALSE. a text vector otherwise.
 #' @export
 calculate_duplication <- function(input_text, return_text_only = FALSE, method = "cosine", threshold = 0.99, percentile = FALSE, low_memory = FALSE, verbose = FALSE) {
-    res <- quanteda::dfm(quanteda::tokens(input_text, what = "word"))
+    if ("dfm" %in% class(input_text)) {
+        res <- input_text
+    } else {
+        res <- quanteda::dfm(quanteda::tokens(input_text, what = "word"))
+    }
     dist_matrix <- quanteda.textstats::textstat_simil(res, method = method, margin = "documents")
     if (percentile) {
         threshold <- as.numeric(stats::quantile(dist_matrix@x, probs = c(threshold)))
@@ -56,7 +60,12 @@ calculate_duplication <- function(input_text, return_text_only = FALSE, method =
             }
         }
     }
-    duplication <- list(input_text = input_text, clean_text = input_text[bag], bag = bag, excluded = excluded, matching_ids = matching_ids, method = method, threshold = threshold, dist_matrix = dist_matrix)
+    if ("dfm" %in% class(input_text)) {
+        clean_text <- input_text[bag,]
+    } else {
+        clean_text <- input_text[bag]
+    }
+    duplication <- list(input_text = input_text, clean_text = clean_text, bag = bag, excluded = excluded, matching_ids = matching_ids, method = method, threshold = threshold, dist_matrix = dist_matrix)
     class(duplication) <- append(class(duplication), "duplication")
     if (return_text_only) {
         return(get_deduplicated_version(duplication))
@@ -73,7 +82,11 @@ calculate_duplication <- function(input_text, return_text_only = FALSE, method =
 #' @return nothing
 #' @export
 print.duplication <- function(x, ...) {
-    cat(paste("Text vector of length", length(x$input_text), "with", length(x$excluded), "duplicates.\n"))
+    if ("dfm" %in% class(x$input_text)) {
+        cat("DFM of", ndoc(x$input_text), "document(s) with", length(x$excluded), "duplicates.\n")
+    } else { 
+        cat(paste("Text vector of length", length(x$input_text), "with", length(x$excluded), "duplicates.\n"))
+    }
 }
 
 #' Extract deduplicated version from duplication objects
@@ -81,16 +94,19 @@ print.duplication <- function(x, ...) {
 #' This method extracts the deduplicated text vector of the input duplication object.
 #'
 #' @param duplication the duplication object to be processed
-#' @param precedence character of one of the following options: earlier (default), longer, shorter, random. This option controls which document to take when duplicates exist.
+#' @param precedence character of one of the following options: earlier (default), longer, shorter, random. This option controls which document to take when duplicates exist. This is not used, when `input_text` is a dfm object.
 #' \itemize{
 #'    \item earlier: Take the document which is earlier in the input text vector.
 #'    \item longer: Take the document which is longer.
 #'    \item shorter: Take the document which is shorter.
 #'    \item random: Randomly take a document.
 #' }
-#' @return a text vector
+#' @return a text vector or a dfm object
 #' @export
 get_deduplicated_version <- function(duplication, precedence = "earlier") {
+    if ("dfm" %in% class(duplication$input_text)) {
+        return(duplication$input_text[duplication$bag, ])
+    }
     if (!precedence %in% c("earlier", "longer", "shorter", "random")) {
         stop("Please use a valid precedence option: earlier, longer, shorter, random")
     }

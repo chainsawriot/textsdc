@@ -15,7 +15,7 @@ calculate_duplication(
 )
 }
 \arguments{
-\item{input_text}{text vector to be analysed}
+\item{input_text}{It can either be a text vector or a \code{\link[quanteda:dfm]{quanteda::dfm()}} object.}
 
 \item{return_text_only}{logical, if TRUE, return only the cleaned version of text. If FALSE, return a duplication object.}
 
@@ -25,7 +25,7 @@ calculate_duplication(
 
 \item{percentile}{logical, if TRUE, threshold is a percentile rank. (i.e. two documents are assumed to be duplicates, when the text similarity between them is higher than this percentile.)}
 
-\item{low_memory}{logical, if TRUE, the similarity matrix is not convert to matrix. The trade-off: the deduplication process is going to be slower.}
+\item{low_memory}{logical, if TRUE, the similarity matrix is not convert to a regular matrix. The trade-off: the deduplication process is going to be slower.}
 
 \item{verbose}{logical, if TRUE, display debug messages.}
 }

@@ -9,7 +9,7 @@ get_deduplicated_version(duplication, precedence = "earlier")
 \arguments{
 \item{duplication}{the duplication object to be processed}
 
-\item{precedence}{character of one of the following options: earlier (default), longer, shorter, random. This option controls which document to take when duplicates exist.
+\item{precedence}{character of one of the following options: earlier (default), longer, shorter, random. This option controls which document to take when duplicates exist. This is not used, when \code{input_text} is a dfm object.
 \itemize{
 \item earlier: Take the document which is earlier in the input text vector.
 \item longer: Take the document which is longer.
@@ -18,7 +18,7 @@ get_deduplicated_version(duplication, precedence = "earlier")
 }}
 }
 \value{
-a text vector
+a text vector or a dfm object
 }
 \description{
 This method extracts the deduplicated text vector of the input duplication object.
