@@ -11,6 +11,7 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+devtools::load_all()
 ```
 # textsdc
 
@@ -41,16 +42,29 @@ devtools::install_github("chainsawriot/textsdc")
 
 Calculate the possible duplicates in your input text.
 
-```{r example}
+```{r, eval = FALSE}
 require(textsdc)
-demands <- c("Completely withdraw Extradition Bill",
-             "Retract the proclamation that protests on 9th June and 12th June were riots",
-             "Withdraw criminal charges against all protesters",
-             "Thoroughly investigate abuse of powers by the police",
-             "Dissolve the Legislative Council by administrative order, and immediately implement Dual Universal Suffrage",
-             "Withdraw criminal charges against all protesters",
-             "Dissolve the Legisative Council by administrative order, and immediately implement Dual Universal Suffrage")
-dups <- calculate_duplication(demands)
+```
+
+```{r example}
+lyrics <- c("He drinks a Whiskey drink",
+            "he drinks a Vodka drink",
+            "He drinks a Lager drink",
+            "he drinks a Cider drink",
+            "He sings the songs that remind him of the good times",
+            "He sings the songs that remind him of the best times",
+            "Oh Danny Boy",
+            "Danny Boy",
+            "Danny Boy",
+            "I get knocked down, but I get up again",
+            "You are never gonna keep me down",
+            "I get knocked down, but I get up again",
+            "You are never gonna keep me down",
+            "I get knocked down, but I get up again",
+            "You are never gonna keep me down",
+            "I get knocked down, but I get up again",
+            "You are never gonna keep me down")
+dups <- calculate_duplication(lyrics)
 dups
 ```
 
@@ -59,8 +73,9 @@ dups$dist_matrix
 ```
 
 Adjust the threshold for duplication.
+
 ```{r example3}
-dups2 <- calculate_duplication(demands, threshold = 0.9)
+dups2 <- calculate_duplication(lyrics, threshold = 0.9)
 dups2
 ```
 
@@ -73,7 +88,7 @@ get_deduplicated_version(dups2)
 You can also use percentile-based threshold, e.g. assuming 70% of the articles are not duplicates.
 
 ```{r example5}
-dups3 <- calculate_duplication(demands, threshold = 0.7, percentile = TRUE)
+dups3 <- calculate_duplication(lyrics, threshold = 0.7, percentile = TRUE)
 dups3
 ```
 
@@ -90,7 +105,7 @@ demands2 <- c("徹底撤回修例",
               "徹底追究警隊濫權情況",
               "以行政命令解散立法會，立即實行雙真普選",
               "撤銷對至今為止所有反送中抗爭者控罪",
-              "以命令解散立法會，立即實行雙真普選")
+              "解散立法會，立即實行雙真普選")
 dups4 <- calculate_duplication(demands2, threshold = 0.7, percentile = TRUE)
 dups4
 ```

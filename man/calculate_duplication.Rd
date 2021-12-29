@@ -4,16 +4,22 @@
 \alias{calculate_duplication}
 \title{Calculate duplication from a text vector}
 \usage{
-calculate_duplication(input_text, return_text_only = FALSE,
-  method = "cosine", threshold = 0.99, percentile = FALSE,
-  low_memory = FALSE, verbose = FALSE)
+calculate_duplication(
+  input_text,
+  return_text_only = FALSE,
+  method = "cosine",
+  threshold = 0.99,
+  percentile = FALSE,
+  low_memory = FALSE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{input_text}{text vector to be analysed}
 
 \item{return_text_only}{logical, if TRUE, return only the cleaned version of text. If FALSE, return a duplication object.}
 
-\item{method}{character, which method to calculate similarity between documents. Default is "cosine" (cosine similarity), other options are: "correlation", "jaccard", "ejaccard", "dice", "edice", "hammm", "simple matching", please refer to quanteda::textstat_simil()}
+\item{method}{character, which method to calculate similarity between documents. Default is "cosine" (cosine similarity), other options are: "correlation", "jaccard", "ejaccard", "dice", "edice", "hammm", "simple matching", please refer to \code{\link[quanteda.textstats:textstat_simil]{quanteda.textstats::textstat_simil()}}}
 
 \item{threshold}{numeric, the numeric threshold of text similarity between two documents to be assumed to be duplicates. If percentile is TRUE, this threshold is a percentile rank.}
 

@@ -1,23 +1,24 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-textsdc
-=======
 
-The goal of textsdc (text statistical data cleaning) is to clean text data statistically. The current version can do:
+# textsdc
+
+The goal of textsdc (text statistical data cleaning) is to clean text
+data statistically. The current version can do:
 
 1.  text deduplication using a very simple similarity-based algorithm.
 
 Future version should be able to do:
 
-1.  removal of "boilerplates".
+1.  removal of “boilerplates”.
 
 Related packages:
 
 1.  [quanteda](https://github.com/quanteda/quanteda) - for text analysis
-2.  [textclean](https://github.com/trinker/textclean) - for normalization of text data
+2.  [textclean](https://github.com/trinker/textclean) - for
+    normalization of text data
 
-Installation
-------------
+## Installation
 
 You can install the experimental version of textsdc from github:
 
@@ -25,8 +26,7 @@ You can install the experimental version of textsdc from github:
 devtools::install_github("chainsawriot/textsdc")
 ```
 
-Example
--------
+## Example
 
 ### Deduplication
 
@@ -34,73 +34,127 @@ Calculate the possible duplicates in your input text.
 
 ``` r
 require(textsdc)
-#> Loading required package: textsdc
-demands <- c("Completely withdraw Extradition Bill",
-             "Retract the proclamation that protests on 9th June and 12th June were riots",
-             "Withdraw criminal charges against all protesters",
-             "Thoroughly investigate abuse of powers by the police",
-             "Dissolve the Legislative Council by administrative order, and immediately implement Dual Universal Suffrage",
-             "Withdraw criminal charges against all protesters",
-             "Dissolve the Legisative Council by administrative order, and immediately implement Dual Universal Suffrage")
-dups <- calculate_duplication(demands)
+```
+
+``` r
+lyrics <- c("He drinks a Whiskey drink",
+            "he drinks a Vodka drink",
+            "He drinks a Lager drink",
+            "he drinks a Cider drink",
+            "He sings the songs that remind him of the good times",
+            "He sings the songs that remind him of the best times",
+            "Oh Danny Boy",
+            "Danny Boy",
+            "Danny Boy",
+            "I get knocked down, but I get up again",
+            "You are never gonna keep me down",
+            "I get knocked down, but I get up again",
+            "You are never gonna keep me down",
+            "I get knocked down, but I get up again",
+            "You are never gonna keep me down",
+            "I get knocked down, but I get up again",
+            "You are never gonna keep me down")
+dups <- calculate_duplication(lyrics)
 dups
-#> Text vector of length 7 with 1 duplicates.
+#> Text vector of length 17 with 7 duplicates.
 ```
 
 ``` r
 dups$dist_matrix
-#>           text1      text2     text3      text4     text5     text6
-#> text1 1.0000000 0.00000000 0.2041241 0.00000000 0.0000000 0.2041241
-#> text2 0.0000000 1.00000000 0.0000000 0.09128709 0.1380131 0.0000000
-#> text3 0.2041241 0.00000000 1.0000000 0.00000000 0.0000000 1.0000000
-#> text4 0.0000000 0.09128709 0.0000000 1.00000000 0.1889822 0.0000000
-#> text5 0.0000000 0.13801311 0.0000000 0.18898224 1.0000000 0.0000000
-#> text6 0.2041241 0.00000000 1.0000000 0.00000000 0.0000000 1.0000000
-#> text7 0.0000000 0.13801311 0.0000000 0.18898224 0.9285714 0.0000000
-#>           text7
-#> text1 0.0000000
-#> text2 0.1380131
-#> text3 0.0000000
-#> text4 0.1889822
-#> text5 0.9285714
-#> text6 0.0000000
-#> text7 1.0000000
+#>            text1     text2     text3     text4     text5     text6     text7
+#> text1  1.0000000 0.8000000 0.8000000 0.8000000 0.1240347 0.1240347 0.0000000
+#> text2  0.8000000 1.0000000 0.8000000 0.8000000 0.1240347 0.1240347 0.0000000
+#> text3  0.8000000 0.8000000 1.0000000 0.8000000 0.1240347 0.1240347 0.0000000
+#> text4  0.8000000 0.8000000 0.8000000 1.0000000 0.1240347 0.1240347 0.0000000
+#> text5  0.1240347 0.1240347 0.1240347 0.1240347 1.0000000 0.9230769 0.0000000
+#> text6  0.1240347 0.1240347 0.1240347 0.1240347 0.9230769 1.0000000 0.0000000
+#> text7  0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 1.0000000
+#> text8  0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.8164966
+#> text9  0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.8164966
+#> text10 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+#> text11 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+#> text12 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+#> text13 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+#> text14 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+#> text15 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+#> text16 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+#> text17 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+#>            text8     text9    text10    text11    text12    text13    text14
+#> text1  0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+#> text2  0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+#> text3  0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+#> text4  0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+#> text5  0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+#> text6  0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+#> text7  0.8164966 0.8164966 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+#> text8  1.0000000 1.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+#> text9  1.0000000 1.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+#> text10 0.0000000 0.0000000 1.0000000 0.1010153 1.0000000 0.1010153 1.0000000
+#> text11 0.0000000 0.0000000 0.1010153 1.0000000 0.1010153 1.0000000 0.1010153
+#> text12 0.0000000 0.0000000 1.0000000 0.1010153 1.0000000 0.1010153 1.0000000
+#> text13 0.0000000 0.0000000 0.1010153 1.0000000 0.1010153 1.0000000 0.1010153
+#> text14 0.0000000 0.0000000 1.0000000 0.1010153 1.0000000 0.1010153 1.0000000
+#> text15 0.0000000 0.0000000 0.1010153 1.0000000 0.1010153 1.0000000 0.1010153
+#> text16 0.0000000 0.0000000 1.0000000 0.1010153 1.0000000 0.1010153 1.0000000
+#> text17 0.0000000 0.0000000 0.1010153 1.0000000 0.1010153 1.0000000 0.1010153
+#>           text15    text16    text17
+#> text1  0.0000000 0.0000000 0.0000000
+#> text2  0.0000000 0.0000000 0.0000000
+#> text3  0.0000000 0.0000000 0.0000000
+#> text4  0.0000000 0.0000000 0.0000000
+#> text5  0.0000000 0.0000000 0.0000000
+#> text6  0.0000000 0.0000000 0.0000000
+#> text7  0.0000000 0.0000000 0.0000000
+#> text8  0.0000000 0.0000000 0.0000000
+#> text9  0.0000000 0.0000000 0.0000000
+#> text10 0.1010153 1.0000000 0.1010153
+#> text11 1.0000000 0.1010153 1.0000000
+#> text12 0.1010153 1.0000000 0.1010153
+#> text13 1.0000000 0.1010153 1.0000000
+#> text14 0.1010153 1.0000000 0.1010153
+#> text15 1.0000000 0.1010153 1.0000000
+#> text16 0.1010153 1.0000000 0.1010153
+#> text17 1.0000000 0.1010153 1.0000000
 ```
 
 Adjust the threshold for duplication.
 
 ``` r
-dups2 <- calculate_duplication(demands, threshold = 0.9)
+dups2 <- calculate_duplication(lyrics, threshold = 0.9)
 dups2
-#> Text vector of length 7 with 2 duplicates.
+#> Text vector of length 17 with 8 duplicates.
 ```
 
 Extract the deduplicated version
 
 ``` r
 get_deduplicated_version(dups2)
-#> [1] "Completely withdraw Extradition Bill"                                                                       
-#> [2] "Retract the proclamation that protests on 9th June and 12th June were riots"                                
-#> [3] "Withdraw criminal charges against all protesters"                                                           
-#> [4] "Thoroughly investigate abuse of powers by the police"                                                       
-#> [5] "Dissolve the Legislative Council by administrative order, and immediately implement Dual Universal Suffrage"
+#> [1] "He drinks a Whiskey drink"                           
+#> [2] "he drinks a Vodka drink"                             
+#> [3] "He drinks a Lager drink"                             
+#> [4] "he drinks a Cider drink"                             
+#> [5] "He sings the songs that remind him of the good times"
+#> [6] "Oh Danny Boy"                                        
+#> [7] "Danny Boy"                                           
+#> [8] "I get knocked down, but I get up again"              
+#> [9] "You are never gonna keep me down"
 ```
 
-You can also use percentile-based threshold, e.g. assuming 70% of the articles are not duplicates.
+You can also use percentile-based threshold, e.g. assuming 70% of the
+articles are not duplicates.
 
 ``` r
-dups3 <- calculate_duplication(demands, threshold = 0.7, percentile = TRUE)
+dups3 <- calculate_duplication(lyrics, threshold = 0.7, percentile = TRUE)
 dups3
-#> Text vector of length 7 with 2 duplicates.
+#> Text vector of length 17 with 13 duplicates.
 ```
 
 ``` r
 get_deduplicated_version(dups3)
-#> [1] "Completely withdraw Extradition Bill"                                                                       
-#> [2] "Retract the proclamation that protests on 9th June and 12th June were riots"                                
-#> [3] "Withdraw criminal charges against all protesters"                                                           
-#> [4] "Thoroughly investigate abuse of powers by the police"                                                       
-#> [5] "Dissolve the Legislative Council by administrative order, and immediately implement Dual Universal Suffrage"
+#> [1] "He drinks a Whiskey drink"             
+#> [2] "Oh Danny Boy"                          
+#> [3] "I get knocked down, but I get up again"
+#> [4] "You are never gonna keep me down"
 ```
 
 CJK language
@@ -112,7 +166,7 @@ demands2 <- c("徹底撤回修例",
               "徹底追究警隊濫權情況",
               "以行政命令解散立法會，立即實行雙真普選",
               "撤銷對至今為止所有反送中抗爭者控罪",
-              "以命令解散立法會，立即實行雙真普選")
+              "解散立法會，立即實行雙真普選")
 dups4 <- calculate_duplication(demands2, threshold = 0.7, percentile = TRUE)
 dups4
 #> Text vector of length 7 with 2 duplicates.
@@ -127,7 +181,8 @@ get_deduplicated_version(dups4)
 #> [5] "以行政命令解散立法會，立即實行雙真普選"
 ```
 
-There are four precedence options on how to get the deduplicated version of the input text.
+There are four precedence options on how to get the deduplicated version
+of the input text.
 
 Default: earlier
 
@@ -158,8 +213,8 @@ Shorter
 
 ``` r
 get_deduplicated_version(metallica_dups, precedence = "shorter")
-#> [1] "The Unforgiven"         "Fight Fire With Fire"  
-#> [3] "Master of Puppets"      "For Whom The Bell Toll"
+#> [1] "The Unforgiven"         "Fight Fire With Fire"   "Master of Puppets"     
+#> [4] "For Whom The Bell Toll"
 ```
 
 Random
@@ -167,5 +222,5 @@ Random
 ``` r
 get_deduplicated_version(metallica_dups, precedence = "random")
 #> [1] "The Unforgiven III"      "Fight Fire With Fire"   
-#> [3] "For Whom The Bell Tolls" "Master of Puppets"
+#> [3] "Master of Puppets"       "For Whom The Bell Tolls"
 ```

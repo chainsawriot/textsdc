@@ -4,10 +4,12 @@
 \alias{print.duplication}
 \title{Display duplication objects}
 \usage{
-\method{print}{duplication}(duplication)
+\method{print}{duplication}(x, ...)
 }
 \arguments{
-\item{duplication}{the duplication object to be displayed}
+\item{x}{the duplication object to be displayed}
+
+\item{...}{not implemented}
 }
 \value{
 nothing

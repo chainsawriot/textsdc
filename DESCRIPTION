@@ -1,6 +1,6 @@
 Package: textsdc
 Title: Statistical Data Cleaning For Text Data
-Version: 0.0.0.2
+Version: 0.0.1
 Authors@R: 
     person(given = "Chung-hong",
            family = "Chan",
@@ -12,6 +12,10 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.2
 Imports: 
-    quanteda
+    quanteda,
+    quanteda.textstats,
+    stats
+
+
