@@ -2,11 +2,16 @@
 % Please edit documentation in R/duplication.R
 \name{get_deduplicated_version}
 \alias{get_deduplicated_version}
+\alias{clean_textsdc}
 \title{Extract deduplicated version from duplication objects}
 \usage{
-get_deduplicated_version(duplication, precedence = "earlier")
+get_deduplicated_version(...)
+
+clean_textsdc(duplication, precedence = "earlier")
 }
 \arguments{
+\item{...}{parameters to be passed to \code{clean_textsdc}}
+
 \item{duplication}{the duplication object to be processed}
 
 \item{precedence}{character of one of the following options: earlier (default), longer, shorter, random. This option controls which document to take when duplicates exist. This is not used, when \code{input_text} is a dfm object.
@@ -21,5 +26,5 @@ get_deduplicated_version(duplication, precedence = "earlier")
 a text vector or a dfm object
 }
 \description{
-This method extracts the deduplicated text vector of the input duplication object.
+This method extracts the deduplicated text vector of the input duplication object. \code{get_deduplicated_version} is provided for backward compatibility.
 }

@@ -64,7 +64,7 @@ lyrics <- c("He drinks a Whiskey drink",
             "You are never gonna keep me down",
             "I get knocked down, but I get up again",
             "You are never gonna keep me down")
-dups <- calculate_duplication(lyrics)
+dups <- calculate_textsdc(lyrics)
 dups
 ```
 
@@ -75,30 +75,30 @@ dups$dist_matrix
 Extract the deduplicated version
 
 ```{r example21}
-get_deduplicated_version(dups)
+clean_textsdc(dups)
 ```
 
 
 Adjust the threshold for duplication.
 
 ```{r example3}
-dups2 <- calculate_duplication(lyrics, threshold = 0.9)
+dups2 <- calculate_textsdc(lyrics, threshold = 0.9)
 dups2
 ```
 
 ```{r example4}
-get_deduplicated_version(dups2)
+clean_textsdc(dups2)
 ```
 
 You can also use percentile-based threshold, e.g. assuming 70% of the articles are not duplicates.
 
 ```{r example5}
-dups3 <- calculate_duplication(lyrics, threshold = 0.7, percentile = TRUE)
+dups3 <- calculate_textsdc(lyrics, threshold = 0.7, percentile = TRUE)
 dups3
 ```
 
 ```{r example6}
-get_deduplicated_version(dups3)
+clean_textsdc(dups3)
 ```
 
 CJK language
@@ -111,12 +111,12 @@ demands2 <- c("徹底撤回修例",
               "以行政命令解散立法會，立即實行雙真普選",
               "撤銷對至今為止所有反送中抗爭者控罪",
               "解散立法會，立即實行雙真普選")
-dups4 <- calculate_duplication(demands2, threshold = 0.7, percentile = TRUE)
+dups4 <- calculate_textsdc(demands2, threshold = 0.7, percentile = TRUE)
 dups4
 ```
 
 ```{r cjk2}
-get_deduplicated_version(dups4)
+clean_textsdc(dups4)
 ```
 
 There are four precedence options on how to get the deduplicated version of the input text.
@@ -132,24 +132,24 @@ metallica <- c("The Unforgiven",
                "For Whom The Bell Tolls",
                "For Whom The Bell Toll",
                "Master of Puppets")
-metallica_dups <- calculate_duplication(metallica, threshold = 0.7)
-get_deduplicated_version(metallica_dups)
+metallica_dups <- calculate_textsdc(metallica, threshold = 0.7)
+clean_textsdc(metallica_dups)
 ```
 
 Longer
 
 ```{r longer}
-get_deduplicated_version(metallica_dups, precedence = "longer")
+clean_textsdc(metallica_dups, precedence = "longer")
 ```
 
 Shorter
 
 ```{r shorter}
-get_deduplicated_version(metallica_dups, precedence = "shorter")
+clean_textsdc(metallica_dups, precedence = "shorter")
 ```
 
 Random
 
 ```{r random}
-get_deduplicated_version(metallica_dups, precedence = "random")
+clean_textsdc(metallica_dups, precedence = "random")
 ```

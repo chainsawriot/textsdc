@@ -2,4 +2,6 @@
 
 S3method(print,duplication)
 export(calculate_duplication)
+export(calculate_textsdc)
+export(clean_textsdc)
 export(get_deduplicated_version)

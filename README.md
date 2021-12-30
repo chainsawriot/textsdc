@@ -54,7 +54,7 @@ lyrics <- c("He drinks a Whiskey drink",
             "You are never gonna keep me down",
             "I get knocked down, but I get up again",
             "You are never gonna keep me down")
-dups <- calculate_duplication(lyrics)
+dups <- calculate_textsdc(lyrics)
 dups
 #> Text vector of length 17 with 7 duplicates.
 ```
@@ -120,7 +120,7 @@ dups$dist_matrix
 Extract the deduplicated version
 
 ``` r
-get_deduplicated_version(dups)
+clean_textsdc(dups)
 #>  [1] "He drinks a Whiskey drink"                           
 #>  [2] "he drinks a Vodka drink"                             
 #>  [3] "He drinks a Lager drink"                             
@@ -136,13 +136,13 @@ get_deduplicated_version(dups)
 Adjust the threshold for duplication.
 
 ``` r
-dups2 <- calculate_duplication(lyrics, threshold = 0.9)
+dups2 <- calculate_textsdc(lyrics, threshold = 0.9)
 dups2
 #> Text vector of length 17 with 8 duplicates.
 ```
 
 ``` r
-get_deduplicated_version(dups2)
+clean_textsdc(dups2)
 #> [1] "He drinks a Whiskey drink"                           
 #> [2] "he drinks a Vodka drink"                             
 #> [3] "He drinks a Lager drink"                             
@@ -158,13 +158,13 @@ You can also use percentile-based threshold, e.g. assuming 70% of the
 articles are not duplicates.
 
 ``` r
-dups3 <- calculate_duplication(lyrics, threshold = 0.7, percentile = TRUE)
+dups3 <- calculate_textsdc(lyrics, threshold = 0.7, percentile = TRUE)
 dups3
 #> Text vector of length 17 with 13 duplicates.
 ```
 
 ``` r
-get_deduplicated_version(dups3)
+clean_textsdc(dups3)
 #> [1] "He drinks a Whiskey drink"             
 #> [2] "Oh Danny Boy"                          
 #> [3] "I get knocked down, but I get up again"
@@ -181,13 +181,13 @@ demands2 <- c("徹底撤回修例",
               "以行政命令解散立法會，立即實行雙真普選",
               "撤銷對至今為止所有反送中抗爭者控罪",
               "解散立法會，立即實行雙真普選")
-dups4 <- calculate_duplication(demands2, threshold = 0.7, percentile = TRUE)
+dups4 <- calculate_textsdc(demands2, threshold = 0.7, percentile = TRUE)
 dups4
 #> Text vector of length 7 with 2 duplicates.
 ```
 
 ``` r
-get_deduplicated_version(dups4)
+clean_textsdc(dups4)
 #> [1] "徹底撤回修例"                          
 #> [2] "收回暴動定義"                          
 #> [3] "撤銷對至今為止所有反送中抗爭者控罪"    
@@ -209,8 +209,8 @@ metallica <- c("The Unforgiven",
                "For Whom The Bell Tolls",
                "For Whom The Bell Toll",
                "Master of Puppets")
-metallica_dups <- calculate_duplication(metallica, threshold = 0.7)
-get_deduplicated_version(metallica_dups)
+metallica_dups <- calculate_textsdc(metallica, threshold = 0.7)
+clean_textsdc(metallica_dups)
 #> [1] "The Unforgiven"          "Fight Fire With Fire"   
 #> [3] "Master of Puppets"       "For Whom The Bell Tolls"
 ```
@@ -218,7 +218,7 @@ get_deduplicated_version(metallica_dups)
 Longer
 
 ``` r
-get_deduplicated_version(metallica_dups, precedence = "longer")
+clean_textsdc(metallica_dups, precedence = "longer")
 #> [1] "The Unforgiven III"      "Fight Fire With Fire"   
 #> [3] "Master of Puppets"       "For Whom The Bell Tolls"
 ```
@@ -226,7 +226,7 @@ get_deduplicated_version(metallica_dups, precedence = "longer")
 Shorter
 
 ``` r
-get_deduplicated_version(metallica_dups, precedence = "shorter")
+clean_textsdc(metallica_dups, precedence = "shorter")
 #> [1] "The Unforgiven"         "Fight Fire With Fire"   "Master of Puppets"     
 #> [4] "For Whom The Bell Toll"
 ```
@@ -234,7 +234,7 @@ get_deduplicated_version(metallica_dups, precedence = "shorter")
 Random
 
 ``` r
-get_deduplicated_version(metallica_dups, precedence = "random")
-#> [1] "The Unforgiven"         "Fight Fire With Fire"   "For Whom The Bell Toll"
-#> [4] "Master of Puppets"
+clean_textsdc(metallica_dups, precedence = "random")
+#> [1] "The Unforgiven III"      "Fight Fire With Fire"   
+#> [3] "Master of Puppets"       "For Whom The Bell Tolls"
 ```

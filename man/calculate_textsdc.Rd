@@ -2,9 +2,12 @@
 % Please edit documentation in R/duplication.R
 \name{calculate_duplication}
 \alias{calculate_duplication}
+\alias{calculate_textsdc}
 \title{Calculate duplication from a text vector}
 \usage{
-calculate_duplication(
+calculate_duplication(...)
+
+calculate_textsdc(
   input_text,
   return_text_only = FALSE,
   method = "cosine",
@@ -15,15 +18,17 @@ calculate_duplication(
 )
 }
 \arguments{
+\item{...}{parameters to be passed to \code{calculate_textsdc}}
+
 \item{input_text}{It can either be a text vector or a \code{\link[quanteda:dfm]{quanteda::dfm()}} object.}
 
 \item{return_text_only}{logical, if TRUE, return only the cleaned version of text. If FALSE, return a duplication object.}
 
 \item{method}{character, which method to calculate similarity between documents. Default is "cosine" (cosine similarity), other options are: "correlation", "jaccard", "ejaccard", "dice", "edice", "hammm", "simple matching", please refer to \code{\link[quanteda.textstats:textstat_simil]{quanteda.textstats::textstat_simil()}}}
 
-\item{threshold}{numeric, the numeric threshold of text similarity between two documents to be assumed to be duplicates. If percentile is TRUE, this threshold is a percentile rank.}
+\item{threshold}{numeric, the numeric threshold of text similarity between two documents to be assumed to be a pair of duplicates. If percentile is TRUE, this threshold is a percentile rank.}
 
-\item{percentile}{logical, if TRUE, threshold is a percentile rank. (i.e. two documents are assumed to be duplicates, when the text similarity between them is higher than this percentile.)}
+\item{percentile}{logical, if TRUE, threshold is a percentile rank. (i.e. two documents are assumed to be a pair of duplicates, when the text similarity between them is higher than this percentile.)}
 
 \item{low_memory}{logical, if TRUE, the similarity matrix is not convert to a regular matrix. The trade-off: the deduplication process is going to be slower.}
 
@@ -33,5 +38,5 @@ calculate_duplication(
 a duplication object if return_text_only is FALSE. a text vector otherwise.
 }
 \description{
-This function uses the simple bag-of-words assumption to calculate possible duplicates in the input text vector. It works better with longer text than shorter text.
+This function uses the simple bag-of-words assumption to calculate possible duplicates in the input text vector. It works better with longer text than shorter text. \code{calculate_duplication} is provided for backward compatibility.
 }

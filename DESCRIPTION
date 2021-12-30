@@ -1,6 +1,6 @@
 Package: textsdc
 Title: Statistical Data Cleaning For Text Data
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: 
     person(given = "Chung-hong",
            family = "Chan",
